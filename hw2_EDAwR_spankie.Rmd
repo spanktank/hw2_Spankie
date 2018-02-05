@@ -96,10 +96,7 @@ county_MI <- read.csv('data/county_MI.csv')
 Check the structure of each data.frame and use the `summary` function to begin
 exploring the data. Are there any NA values? What 
 differences do you notice between the structure of the two data frames.
-## ANSWER: There are NA values in the following variables for county_df: "Income" "IncomeErr" "ChildPoverty". There are no NA values in county_df.
-##         The dataframe county_MI has 41 variables, while county_df only has 40 variables. Because county_MI only contains observations from Michigan,
-##         the variable "peninsula" was added to specify if the observation was from the lower peninsula or the upper peninsula. Another difference between
-##         the two structures is that county_MI has less levels in its factor variables because there are less observations in this data frame.
+*ANSWER: There are NA values in the following variables for county_df: "Income" "IncomeErr" "ChildPoverty". There are no NA values in county_df. The dataframe county_MI has 41 variables, while county_df only has 40 variables. Because county_MI only contains observations from Michigan, the variable "peninsula" was added to specify if the observation was from the lower peninsula or the upper peninsula. Another difference between the two structures is that county_MI has less levels in its factor variables because there are less observations in this data frame.*
 
 ```{r}
 str(county_df)
