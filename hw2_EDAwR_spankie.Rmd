@@ -99,11 +99,7 @@ Check the structure of each data.frame and use the `summary` function to begin
 exploring the data. Are there any NA values? What 
 differences do you notice between the structure of the two data frames.
 
-<<<<<<< HEAD
 *ANSWER: There are NA values in the following variables for county_df: "Income" "IncomeErr" "ChildPoverty". There are no NA values in county_df. The dataframe county_MI has 41 variables, while county_df only has 40 variables. Because county_MI only contains observations from Michigan, the variable "peninsula" was added to specify if the observation was from the lower peninsula or the upper peninsula. Another difference between the two structures is that county_MI has less levels in its factor variables because the observations in this data frame are only from Michigan.*
-=======
-*ANSWER: There are NA values in the following variables for county_df: "Income" "IncomeErr" "ChildPoverty". There are no NA values in county_df. The dataframe county_MI has 41 variables, while county_df only has 40 variables. Because county_MI only contains observations from Michigan, the variable "peninsula" was added to specify if the observation was from the lower peninsula or the upper peninsula. Another difference between the two structures is that county_MI has less levels in its factor variables because there are less observations in this data frame.*
->>>>>>> 5f9412642fdaa51e71beb1e28d0d4865c083dbe0
 
 ```{r}
 str(county_df)
@@ -125,37 +121,42 @@ Create a histogram, boxplot, kernel density plot and violin plot for median
 income for the entire US. 
 
 Write a short paragraph describing the distribution of median incomes.
-*The distribution of median income is skewed to the right with a*
 
 *The distribution has a wide spread with median income ranging from less than $25,000 in some counties to almost $125,000 in others.The distribution of median income is unimodal and skewed to the right with a mode of about $40,000. The distribution also varies based on the region or division. Median income distribution in the New England and Pacific regions have a much more narrow distribution and have significantly fewer outliers than the other divisions. Similarly, the Midwest region is much more narrowly distributed than the South region*
-**
 
 ```{r}
 ggplot(county_df, aes(county_df$Income)) + 
-  geom_histogram(col = "black", fill = "blue") + 
-  labs(title = "US Median County Income", x = "Median Income", y = "Number of Counties in US")
+  geom_histogram(col = "black", 
+                 fill = "blue") + 
+  labs(title = "US Median County Income", 
+       x = "Median Income", 
+       y = "Number of Counties in US") + 
+  scale_x_continuous(labels = scales::dollar)
 ggplot(county_df, aes(x = county_df$Division, y = county_df$Income)) + 
-  geom_boxplot(col = "black", fill = "green") + 
-  labs(title = "US Median County Income by Division", x = "Division", y = "Median County Income") + 
-  theme(axis.text.x = element_text(angle = 75, hjust = 1))
-<<<<<<< HEAD
+  geom_boxplot(col = "black", 
+               fill = "green") + 
+  labs(title = "US Median County Income by Division", 
+       x = "Division", 
+       y = "Median County Income") + 
+  theme(axis.text.x = element_text(angle = 75, hjust = 1)) + 
+  scale_y_continuous(labels = scales::dollar)
 ggplot(county_df, aes(county_df$Income, fill = county_df$Region)) + 
-  geom_density(position = "stack", alpha = .4) + 
-  labs(title = "US Median County Income by Region", x = "Median Income", y = "Density", fill = "Region") + 
+  geom_density(position = "stack", 
+               alpha = .4) + 
+  labs(title = "US Median County Income by Region", 
+       x = "Median Income", 
+       y = "Density", 
+       fill = "Region") + 
   scale_y_continuous(labels = scales::comma) + 
-  scale_color_brewer(palette = "Accent")
+  scale_x_continuous(labels = scales::dollar)
 ggplot(county_df, aes(x = county_df$Region, y = county_df$Income)) + 
-  geom_violin(col = "pink", fill = "brown") + 
-  labs(title = "US Median County Income by Region", x = "Region", y = "Median County Income") + 
-=======
-ggplot(county_df, aes(county_df$Income)) + 
-  geom_density(fill = "pink") + 
-  labs(title = "US Median County Income", x = "Median Income", y = "Density")
-ggplot(county_df, aes(x = county_df$Division, y = county_df$Income)) + 
-  geom_violin(col = "pink", fill = "brown") + 
-  labs(title = "US Median County Income by Division", x = "Division", y = "Median County Income") + 
->>>>>>> 5f9412642fdaa51e71beb1e28d0d4865c083dbe0
-  theme(axis.text.x = element_text(angle = 75, hjust = 1))
+  geom_violin(col = "pink", 
+              fill = "brown") + 
+  labs(title = "US Median County Income by Region", 
+       x = "Region", 
+       y = "Median County Income") + 
+  theme(axis.text.x = element_text(angle = 75, hjust = 1)) + 
+  scale_y_continuous(labels = scales::dollar)
 ```
 
 ### Problem 3 - Histogram of total population
@@ -163,7 +164,8 @@ ggplot(county_df, aes(x = county_df$Division, y = county_df$Income)) +
 Create a histogram of total population for counties in the US.
 
 ```{r histo_totpop}
-
+ggplot(county_df, aes(county_df$TotalPop)) + 
+  geom_histogram()
 ```
 
 Repeat the histogram about but make the following style changes to the plot.
@@ -174,7 +176,17 @@ Repeat the histogram about but make the following style changes to the plot.
 * Change the colors of the bars to something other than the default black
 
 ```{r histo_stylechanges}
-
+ggplot(county_df, aes(county_df$TotalPop)) + 
+  geom_histogram(col = "black", 
+                 fill = "purple") + 
+  labs(title = "Distribution of population for US counties", x = "Total Population", y = "Number of counties")
+ggplot(county_df, aes(x = county_df$Income)) + 
+  geom_histogram(aes(y = ..density..), col = "black", fill = "blue") + 
+  geom_density(col = "purple", fill = "purple", alpha = .3) + 
+  labs(title = "US Median County Income", 
+       x = "Median Income", 
+       y = "Density") + 
+  scale_x_continuous(labels = scales::dollar)
 ```
 
 **Hacker Extra** - Also create a kernel density plot overlaid on a histogram of
@@ -183,7 +195,12 @@ Income.
 Repeat the histogram but only for counties with less than 2.5 million people.
 
 ```{r histo_lt2.5m}
-
+ggplot(county_df, aes(county_df$TotalPop)) + 
+  geom_histogram(col = "black", 
+                 fill = "purple") + 
+  labs(title = "Distribution of population for US counties", x = "Total Population", y = "Number of counties") + 
+  scale_x_continuous(limits = c(0,2500000)) + 
+  scale_y_continuous(limits = c(0,800))
 ```
 
 
@@ -194,17 +211,46 @@ your graph has a title and good axis labels.
 
 Do the peninsulas 
 differ with respect to distribution of median income over the counties?
-
+*The distributions do differ with respect to distribution of median income over the counties. The lower peninsula has a much wider spread of median income and has a higher mean median income.*
 
 ```{r bp_inc_by_peninsula}
-
+ggplot(county_MI, aes(x = county_MI$State, y = county_MI$Income, fill = county_MI$peninsula)) + 
+  geom_boxplot() + 
+  labs(title = "Michigan Income by Peninsula", 
+       x = "State", 
+       y = "Income", 
+       fill = "Peninsula") + 
+  scale_y_continuous(labels = scales::dollar)
 ```
 
 Create several more boxplots showing how the peninsulas compare with respect to
 some of the other variables. Summarize your findings in a few short paragraphs.
+*The first boxplot below compares the percentage of the population in each UP and LP county that are men. In the LP, the percentage of men in each county ranges mostly from 48% to 52% with a couple outliers around 53%. The UP, on the other hand, ranges from about 49% to over 60%.*
+*The second boxplot below compares the poverty rate in the counties in the UP and LP. Interestingly, the LP has a higher mean poverty rate at about 17% vs. the UP at 16%. In addition, the LP has a much wider spread of rates with outliers less than 10% and over 30%. The UP is poverty rate ranges only from about 14% to about 22%.*
+*The third boxplot below compares the unemployment rate of counties in the UP and LP. For unemployement, the LP and UP have relatively similar distributions with the UP's mean unemployment rate being slightly less. The LP does have a wider spread than the UP*
 
 ```{r more_boxplots}
-
+ggplot(county_MI, aes(x = county_MI$State, y = county_MI$Men / county_MI$TotalPop, fill = county_MI$peninsula)) + 
+  geom_boxplot() + 
+  labs(title = "Michigan Percent Men by Peninsula", 
+       x = "State", 
+       y = "Percentage Men", 
+       fill = "Peninsula") + 
+  scale_y_continuous(labels = scales::percent)
+ggplot(county_MI, aes(x = county_MI$State, y = county_MI$Poverty / 100, fill = county_MI$peninsula)) + 
+  geom_boxplot() + 
+  labs(title = "Michigan Poverty Rate by Peninsula", 
+       x = "State", 
+       y = "Poverty Rate", 
+       fill = "Peninsula") + 
+  scale_y_continuous(labels = scales::percent)
+ggplot(county_MI, aes(x = county_MI$State, y = county_MI$Unemployment/100, fill = county_MI$peninsula)) + 
+  geom_boxplot() + 
+  labs(title = "Michigan Unemployment Rate by Peninsula", 
+       x = "State", 
+       y = "Unemployement Rate", 
+       fill = "Peninsula") + 
+  scale_y_continuous(labels = scales::percent)
 ```
 
 ### Problem 5 - How do regions of the country compare?
@@ -216,7 +262,12 @@ distribution of MeanCommute time. Make sure your graph has a title and good axis
 labels.
 
 ```{r faceted_histo}
-
+ggplot(county_df) + 
+  geom_histogram(aes(county_df$MeanCommute)) + 
+  facet_grid(.~county_df$Region) + 
+  labs(title = "Mean Commute Time by Region", 
+       x = "Commute Time", 
+       y = "Number of Counties") 
 ```
 
 ### Problem 6 - Basic bar chart
