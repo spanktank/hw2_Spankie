@@ -3,8 +3,8 @@ title: 'HW2-EDA with R - Part1: Plotting'
 author: "misken"
 date: "January 22, 2018"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -44,6 +44,10 @@ track the .R file, the .Rmd file and your .gitignore file. Create a remote repo
 for this homework assignment in your GitHub account. Periodically push your commits
 to GitHub. When done with the assignment, paste in the URL of your GitHub project
 so that I can go look at it.
+
+###Github Homework project URL:
+
+https://github.com/spanktank/hw2_Spankie.git
 
 ## Step 3 - Set working directory and explore data folder
 
@@ -211,6 +215,7 @@ your graph has a title and good axis labels.
 
 Do the peninsulas 
 differ with respect to distribution of median income over the counties?
+
 *ANSWER: The distributions do differ with respect to distribution of median income over the counties. The lower peninsula has a much wider spread of median income and has a higher mean median income.*
 
 ```{r bp_inc_by_peninsula}
@@ -225,6 +230,7 @@ ggplot(county_MI, aes(x = county_MI$State, y = county_MI$Income, fill = county_M
 
 Create several more boxplots showing how the peninsulas compare with respect to
 some of the other variables. Summarize your findings in a few short paragraphs.
+
 *ANSWER: The first boxplot below compares the percentage of the population in each UP and LP county that are men. In the LP, the percentage of men in each county ranges mostly from 48% to 52% with a couple outliers around 53%. The UP, on the other hand, ranges from about 49% to over 60%.*
 *The second boxplot below compares the poverty rate in the counties in the UP and LP. Interestingly, the LP has a higher mean poverty rate at about 17% vs. the UP at 16%. In addition, the LP has a much wider spread of rates with outliers less than 10% and over 30%. The UP is poverty rate ranges only from about 14% to about 22%.*
 *The third boxplot below compares the unemployment rate of counties in the UP and LP. For unemployement, the LP and UP have relatively similar distributions with the UP's mean unemployment rate being slightly less. The LP does have a wider spread than the UP*
@@ -305,14 +311,19 @@ ggplot(county_MI) +
 ```
 
 Your thoughts on the relationship between these variables?
-*These two variables do not appear to be very well related because there is no clear trend in the plot. If graphed, a trendline for the LP would likely be trending up a little, while a trendline for the LP would likely be trending down. However, I do not believe the slopes would be significant enough to associate the two variables.*
+
+*ANSWER: These two variables do not appear to be very well related because there is no clear trend in the plot. If graphed, a trendline for the LP would likely be trending up a little, while a trendline for the LP would likely be trending down. However, I do not believe the slopes would be significant enough to associate the two variables.*
 
 Now, create a few more scatter plots using variables of your choosing in which
 you facet by peninsula as well. How do the relationships compare across the
 peninsulas?
-*The first graph below, "MI - Mean Income by Employement Rate," compares the relationship between the county employment rate and the county mean income in the LP and UP.  As expected, these two variables are positively related to eachother. This relationship appears to hold true for both peninsulas. Even the slope of the two distributions appear to be very close.*
-*The second graph compares the relationship between the percent of the population that is self-employed and the percent of the population in the construction industry. These two variables also appear to be positively related to eachother. Although the slope of the distribution for LP appears to be more severe than the UP.*
-*The third and fourth graphs below compares the relationship between the % of the population that commutes by driving to the size of the population. The only difference between the two graphs is that the "TotalPop" variable in fourth graph is transformed using a log10. Due to outliers causing the scale to be very large, it is difficult to see any relationship between the two variables. Once the population data was transformed, however, the graphs were easier to interpret. There does not appear to be much of a relationship between the % of population that commutes by driving the and log10 of the total county population.*
+
+*ANSWER: The first graph below, "MI - Mean Income by Employement Rate," compares the relationship between the county employment rate and the county mean income in the LP and UP.  As expected, these two variables are positively related to eachother. This relationship appears to hold true for both peninsulas. Even the slope of the two distributions appear to be very close.*
+
+*ANSWER: The second graph compares the relationship between the percent of the population that is self-employed and the percent of the population in the construction industry. These two variables also appear to be positively related to eachother. Although the slope of the distribution for LP appears to be more severe than the UP.*
+
+*ANSWER: The third and fourth graphs below compares the relationship between the % of the population that commutes by driving to the size of the population. The only difference between the two graphs is that the "TotalPop" variable in fourth graph is transformed using a log10. Due to outliers causing the scale to be very large, it is difficult to see any relationship between the two variables. Once the population data was transformed, however, the graphs were easier to interpret. There does not appear to be much of a relationship between the % of population that commutes by driving the and log10 of the total county population.*
+
 ```{r xy_faceted_peninsula}
 ggplot(county_MI) + 
   geom_point(aes(x = county_MI$Employed / county_MI$TotalPop, y = county_MI$Income)) + 
@@ -363,7 +374,8 @@ for patterns. So, figure out a way to either change the axis scales or
 the plotted data itself to use a base 10 logarithmic scale (or transform).
 Write a short paragraph on why one might want to use a log scale or log
 transform of data when plotting.
-*One might want to use a log scale or a log transform when the data they are working with is non-negative and is skewed. Skewed data makes seeing and comparing the relationship between two variables difficult. By scaling/transforming the data, the distribution becomes more normally distributed.*
+
+*ANSWER: One might want to use a log scale or a log transform when the data they are working with is non-negative and is skewed. Skewed data makes seeing and comparing the relationship between two variables difficult. By scaling/transforming the data, the distribution becomes more normally distributed.*
 
 ### Hacker Extra - More analysis
 
