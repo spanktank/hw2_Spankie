@@ -122,29 +122,29 @@ income for the entire US.
 
 Write a short paragraph describing the distribution of median incomes.
 
-*The distribution has a wide spread with median income ranging from less than $25,000 in some counties to almost $125,000 in others.The distribution of median income is unimodal and skewed to the right with a mode of about $40,000. The distribution also varies based on the region or division. Median income distribution in the New England and Pacific regions have a much more narrow distribution and have significantly fewer outliers than the other divisions. Similarly, the Midwest region is much more narrowly distributed than the South region*
+*ANSWER: The distribution has a wide spread with median income ranging from less than $25,000 in some counties to almost $125,000 in others.The distribution of median income is unimodal and skewed to the right with a mode of about $40,000. The distribution also varies based on the region or division. Median income distribution in the New England and Pacific regions have a much more narrow distribution and have significantly fewer outliers than the other divisions. Similarly, the Midwest region is much more narrowly distributed than the South region*
 
 ```{r}
 ggplot(county_df, aes(county_df$Income)) + 
   geom_histogram(col = "black", 
                  fill = "blue") + 
-  labs(title = "US Median County Income", 
-       x = "Median Income", 
+  labs(title = "US - County Median Income", 
+       x = "County Median Income", 
        y = "Number of Counties in US") + 
   scale_x_continuous(labels = scales::dollar)
 ggplot(county_df, aes(x = county_df$Division, y = county_df$Income)) + 
   geom_boxplot(col = "black", 
                fill = "green") + 
-  labs(title = "US Median County Income by Division", 
+  labs(title = "US - County Median Income by Division", 
        x = "Division", 
-       y = "Median County Income") + 
+       y = "County Median Income") + 
   theme(axis.text.x = element_text(angle = 75, hjust = 1)) + 
   scale_y_continuous(labels = scales::dollar)
 ggplot(county_df, aes(county_df$Income, fill = county_df$Region)) + 
   geom_density(position = "stack", 
                alpha = .4) + 
-  labs(title = "US Median County Income by Region", 
-       x = "Median Income", 
+  labs(title = "US - County Median Income", 
+       x = "County Median Income", 
        y = "Density", 
        fill = "Region") + 
   scale_y_continuous(labels = scales::comma) + 
@@ -152,7 +152,7 @@ ggplot(county_df, aes(county_df$Income, fill = county_df$Region)) +
 ggplot(county_df, aes(x = county_df$Region, y = county_df$Income)) + 
   geom_violin(col = "pink", 
               fill = "brown") + 
-  labs(title = "US Median County Income by Region", 
+  labs(title = "US - County Median Income by Region", 
        x = "Region", 
        y = "Median County Income") + 
   theme(axis.text.x = element_text(angle = 75, hjust = 1)) + 
@@ -211,7 +211,7 @@ your graph has a title and good axis labels.
 
 Do the peninsulas 
 differ with respect to distribution of median income over the counties?
-*The distributions do differ with respect to distribution of median income over the counties. The lower peninsula has a much wider spread of median income and has a higher mean median income.*
+*ANSWER: The distributions do differ with respect to distribution of median income over the counties. The lower peninsula has a much wider spread of median income and has a higher mean median income.*
 
 ```{r bp_inc_by_peninsula}
 ggplot(county_MI, aes(x = county_MI$State, y = county_MI$Income, fill = county_MI$peninsula)) + 
@@ -225,7 +225,7 @@ ggplot(county_MI, aes(x = county_MI$State, y = county_MI$Income, fill = county_M
 
 Create several more boxplots showing how the peninsulas compare with respect to
 some of the other variables. Summarize your findings in a few short paragraphs.
-*The first boxplot below compares the percentage of the population in each UP and LP county that are men. In the LP, the percentage of men in each county ranges mostly from 48% to 52% with a couple outliers around 53%. The UP, on the other hand, ranges from about 49% to over 60%.*
+*ANSWER: The first boxplot below compares the percentage of the population in each UP and LP county that are men. In the LP, the percentage of men in each county ranges mostly from 48% to 52% with a couple outliers around 53%. The UP, on the other hand, ranges from about 49% to over 60%.*
 *The second boxplot below compares the poverty rate in the counties in the UP and LP. Interestingly, the LP has a higher mean poverty rate at about 17% vs. the UP at 16%. In addition, the LP has a much wider spread of rates with outliers less than 10% and over 30%. The UP is poverty rate ranges only from about 14% to about 22%.*
 *The third boxplot below compares the unemployment rate of counties in the UP and LP. For unemployement, the LP and UP have relatively similar distributions with the UP's mean unemployment rate being slightly less. The LP does have a wider spread than the UP*
 
@@ -276,7 +276,10 @@ Create a bar chart showing the number of counties by Region in the US. Make sure
 your graph has a title and good axis labels.
 
 ```{r bar_counties_by_region}
-
+ggplot(county_df) + 
+  geom_bar(aes(county_df$Region, fill = county_df$Region)) + 
+  labs(title = "Number of Counties in U.S. by Region", x = "Region", y = "Number of Counties") + 
+  theme(legend.position = "none")
 ```
 
 ### Problem 7 - Basic scatter plots
@@ -285,24 +288,56 @@ Create a scatter plot using the Michigan only data frame comparing
 Income and MeanCommute.
 
 ```{r xy_inc_commute}
-
+ggplot(county_MI) + 
+  geom_point(aes(x = county_MI$MeanCommute, y = county_MI$Income)) + 
+  labs(title = "Mean Income by Mean Commute Time", x = "Mean Commute Time", y = "Mean Income") + 
+  scale_y_continuous(labels = scales::dollar)
 ```
 
 Create a modified version of the above scatter plot in which the point color
 is mapped to peninsula.
 
 ```{r xy_inc_commute_peninsula}
-
+ggplot(county_MI) + 
+  geom_point(aes(x = county_MI$MeanCommute, y = county_MI$Income, shape = county_MI$peninsula, col = county_MI$peninsula)) + 
+  labs(title = "Mean Income by Mean Commute Time", x = "Mean Commute Time", y = "Mean Income") + 
+  scale_y_continuous(labels = scales::dollar)
 ```
 
 Your thoughts on the relationship between these variables?
+*These two variables do not appear to be very well related because there is no clear trend in the plot. If graphed, a trendline for the LP would likely be trending up a little, while a trendline for the LP would likely be trending down. However, I do not believe the slopes would be significant enough to associate the two variables.*
 
 Now, create a few more scatter plots using variables of your choosing in which
 you facet by peninsula as well. How do the relationships compare across the
 peninsulas?
-
+*The first graph below, "MI - Mean Income by Employement Rate," compares the relationship between the county employment rate and the county mean income in the LP and UP.  As expected, these two variables are positively related to eachother. This relationship appears to hold true for both peninsulas. Even the slope of the two distributions appear to be very close.*
+*The second graph compares the relationship between the percent of the population that is self-employed and the percent of the population in the construction industry. These two variables also appear to be positively related to eachother. Although the slope of the distribution for LP appears to be more severe than the UP.*
+*The third and fourth graphs below compares the relationship between the % of the population that commutes by driving to the size of the population. The only difference between the two graphs is that the "TotalPop" variable in fourth graph is transformed using a log10. Due to outliers causing the scale to be very large, it is difficult to see any relationship between the two variables. Once the population data was transformed, however, the graphs were easier to interpret. There does not appear to be much of a relationship between the % of population that commutes by driving the and log10 of the total county population.*
 ```{r xy_faceted_peninsula}
-
+ggplot(county_MI) + 
+  geom_point(aes(x = county_MI$Employed / county_MI$TotalPop, y = county_MI$Income)) + 
+  labs(title = "MI - Mean Income by Employment Rate", x = "Employment Rate", y = "Mean Income") + 
+  scale_x_continuous(labels = scales::percent) + 
+  scale_y_continuous(labels = scales::dollar) + 
+  facet_grid(.~county_MI$peninsula)
+ggplot(county_MI) + 
+  geom_point(aes(x = county_MI$Construction / 100, y = county_MI$SelfEmployed / 100)) + 
+  labs(title = "MI - % Self-Employed by % in Construction Industry", x = "% in Construction Industry", y = "% Self-Employed") + 
+  scale_x_continuous(labels = scales::percent) + 
+  scale_y_continuous(labels = scales::percent) + 
+  facet_wrap(~county_MI$peninsula)
+ggplot(county_MI) + 
+  geom_point(aes(y = county_MI$Drive / 100, x = county_MI$TotalPop)) + 
+  labs(title = "MI - County Driving % by Population", x = "County Population", y = "% Drive") + 
+  scale_x_continuous(labels = scales::comma) + 
+  scale_y_continuous(labels = scales::percent) + 
+  facet_wrap(~county_MI$peninsula)
+ggplot(county_MI) + 
+  geom_point(aes(y = county_MI$Drive / 100, x = county_MI$TotalPop)) + 
+  labs(title = "MI - County Driving % by Population", x = "County Population", y = "% Drive") + 
+  scale_x_continuous(trans = "log10") + 
+  scale_y_continuous(labels = scales::percent) + 
+  facet_wrap(~county_MI$peninsula)
 ```
 
 
@@ -311,7 +346,16 @@ Now use the full US data frame.
 Create a scatter plot of TotalPop by Income.
 
 ```{r xy_pop_inc}
-
+ggplot(county_df) + 
+  geom_point(aes(x = county_df$Income, y = county_df$TotalPop, col = county_df$Region)) + 
+  labs(title = "US County Population by Income", x = "Median Income", y = "County Population", col = "Region") + 
+  scale_x_continuous(labels = scales::dollar) + 
+  scale_y_continuous(labels = scales::comma)
+ggplot(county_df) + 
+  geom_point(aes(x = county_df$Income, y = county_df$TotalPop, col = county_df$Region)) + 
+  labs(title = "US County Population by Income", x = "Median Income", y = "County Population", col = "Region") + 
+  scale_x_continuous(trans = "log10") + 
+  scale_y_continuous(trans = "log10")
 ```
 
 The widely varying values make this difficult to interpret in terms of looking
@@ -319,6 +363,7 @@ for patterns. So, figure out a way to either change the axis scales or
 the plotted data itself to use a base 10 logarithmic scale (or transform).
 Write a short paragraph on why one might want to use a log scale or log
 transform of data when plotting.
+*One might want to use a log scale or a log transform when the data they are working with is non-negative and is skewed. Skewed data makes seeing and comparing the relationship between two variables difficult. By scaling/transforming the data, the distribution becomes more normally distributed.*
 
 ### Hacker Extra - More analysis
 
